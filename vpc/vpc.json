@@ -1,0 +1,79 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description" : "A Simple VPC",
+    "Parameters" : {
+        "cidrblock" : {
+            "Type" : "String",
+            "Default" : "10.0.0.0/16"
+        },
+        "availabilityzone" : {
+            "Type" : "AWS::EC2::AvailabilityZone::Name"
+        }
+    },
+    "Resources" : {
+        "MyVpc" : {
+            "Type" : "AWS::EC2::VPC",
+            "Properties" : {
+                "CidrBlock" : {
+                    "Ref" : "cidrblock"
+                },
+                "Tags" : [
+                    {
+                        "Key" : "name",
+                        "Value" : "bhajanvpc"
+                    }
+                ]
+            }
+        },
+        "mysubnet1" : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "MyVpc"
+                },
+                "AvailabilityZone" : {
+                        "Ref" : "availabilityzone"
+                    },
+                "CidrBlock" : "10.0.0.0/24"
+                }
+            },
+        "mysubnet2" : {
+                "Type" : "AWS::EC2::Subnet",
+                "Properties" : {
+                    "VpcId" : {
+                        "Ref" : "MyVpc"
+                    },
+                    "AvailabilityZone" : {
+                            "Ref" : "availabilityzone"
+                        },
+                    "CidrBlock" : "10.0.1.0/24"
+                    }
+        },
+        "internetgatway" : {
+            "Type" : "AWS::EC2::InternetGateway",
+            "Properties" : {
+                "Tags" : [ {"Key":"mygatway", "Value":"bhajangatway"}]
+                }
+        },
+        "attacheintergatway" : {
+            "Type" : "AWS::EC2::VPCGatewayAttachment",
+            "Properties" : {
+                "InternetGatewayId" : {
+                    "Ref" : "internetgatway"
+                },
+                "VpcId" : {
+                    "Ref" :"MyVpc"
+                }
+              }
+          },
+        "routtable" : {
+            "Type" : "AWS::EC2::RouteTable",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "MyVpc"
+                }
+              }
+          }
+          
+    }
+}
