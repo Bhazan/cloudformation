@@ -47,7 +47,7 @@ Collection of cloudformation template
 **Templates include several major sections. The Resources section is the only required section.** 
 
 ### Hello Bucket!
-**Minimum code needed to crete bucket is given below**
+**Minimum code needed to create a bucket in S3 is given below**
 
 ```
 
