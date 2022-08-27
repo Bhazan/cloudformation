@@ -43,3 +43,5 @@ Collection of cloudformation template
     set of outputs
 }
 ```
+
+** Templates include several major sections. The Resources section is the only required section. ** 
