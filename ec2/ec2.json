@@ -1,0 +1,63 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description" : "a simple web server",
+    "Parameters" : {
+        "InstanceType" : {
+            "Type" : "String",
+            "Description" : "Type of instance we want to create!",
+            "Default" : "t2.micro"
+        },
+        "KeyName" : {
+            "Type" : "AWS::EC2::KeyPair::KeyName",
+            "Description" : "a key"
+        },
+        "SecurityGroupName" : {
+            "Type" : "AWS::EC2::SecurityGroup::GroupName"
+        }
+    },
+    "Mappings" : {
+        "RegionMap" : {
+            "ap-south-1" : {
+                "AMI" : "ami-06489866022e12a14"
+            },
+            "us-east-1" : {
+                "AMI" : "ami-05fa00d4c63e32376"
+            },
+            "eu-west-1" : {
+                "AMI" : "ami-09e2d756e7d78558d"
+            }
+        }
+    },
+    "Resources" : {
+        "WebServer" : {
+            "Type" : "AWS::EC2::Instance",
+            "Properties" : {
+                "InstanceType" : {
+                    "Ref" : "InstanceType"
+                },
+                "KeyName" : {
+                    "Ref" : "KeyName"
+                },
+                "ImageId" : {
+                    "Fn::FindInMap" : [
+                        "RegionMap",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        "AMI"
+                    ]
+                },
+                "SecurityGroups" : [
+                   { 
+                    "Ref" : "SecurityGroupName"
+                }
+                ],
+                "UserData" : {
+                    "Fn::Base64": {
+                        "Fn::Sub" : "#! /bin/bash\nyum update -y"
+                    }
+                }
+            }
+        }
+    }
+}
