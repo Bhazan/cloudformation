@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "An EC2 Machine With Jenkins and Docker"
+Parameters:
+  Mykey:
+    Type: "AWS::EC2::KeyPair::KeyName"
+    Default: "mykey"
+  instancetype:
+    Type: "String"
+    Default: "t2.micro"
+  SecurityGroups:
+    Type: "AWS::EC2::SecurityGroup::GroupName"
+Resources:
+  MyMachine:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: "ami-076e3a557efe1aa9c"
+      InstanceType: !Ref instancetype
+      KeyName:
+        Ref: "Mykey"
+      SecurityGroups:
+        - !Ref SecurityGroups
+      UserData:
+        Fn::Base64: !Sub |
+          #! /bin/bash
+          sudo yum update -y
+          sudo wget -O /etc/yum.repos.d/jenkins.repo \ https://pkg.jenkins.io/redhat-stable/jenkins.repo
+          sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+          sudo yum upgrade
+          sudo amazon-linux-extras install java-openjdk11 -y
+          sudo yum install jenkins -y
+          sudo systemctl enable jenkins
+          sudo systemctl start jenkins

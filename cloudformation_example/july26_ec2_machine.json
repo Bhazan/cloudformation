@@ -1,0 +1,28 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description" : "A Simple EC2 Machine For Jenkins Server",
+    "Parameters" : {
+        "mykey" : {
+            "Type" : "AWS::EC2::KeyPair::KeyName"
+        },
+        "InstanceType" : {
+            "Type" : "String",
+            "Default" : "t2.micro",
+            "AllowedValues" : ["t2.small","t2.micro"]
+        },
+        "securitygroup" : {
+            "Type" :"AWS::EC2::SecurityGroup::Id"
+        }
+    },
+    "Resources" :{
+       "ec2machine" : {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+            "InstanceType" : { "Ref" : "InstanceType" },
+            "ImageId" : "ami-08df646e18b182346",
+            "KeyName" : { "Ref" : "mykey" },
+            "SecurityGroupIds" : [ { "Ref" : "securitygroup" } ]
+        }
+       } 
+    }
+}

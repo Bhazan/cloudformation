@@ -1,0 +1,46 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "A Simple Example"
+Parameters:
+  mykey:
+    Type: "String"
+    Default: "mykey"
+  instanceType:
+    Type: "String"
+    Default: "t2.micro"
+Resources:
+  EC2SecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupName: "mysecurityyaml"
+      GroupDescription: "my security group description"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: "0.0.0.0/0"
+  myinstance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: "ami-08df646e18b182346"
+      InstanceType:
+        Ref: "instanceType"
+      KeyName:
+        Ref: "mykey"
+      BlockDeviceMappings:
+        - DeviceName: "/dev/sdm"
+          Ebs:
+            VolumeType: "gp2"
+            DeleteOnTermination: "false"
+            VolumeSize: "10"
+        - DeviceName: "/dev/sdn"
+          Ebs:
+            VolumeType: "gp2"
+            DeleteOnTermination: "false"
+            VolumeSize: "8"
+      SecurityGroups:
+        - !Ref EC2SecurityGroup

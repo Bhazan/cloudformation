@@ -1,0 +1,48 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description" : "A Simple EC2 Server",
+    "Parameters" : {
+        "mykey" : {
+            "Type" : "AWS::EC2::KeyPair::KeyName",
+            "Default" : "mykey",
+            "Description" : "My keypair Name"
+        },
+        "myinstanc" : {
+            "Type": "String",
+            "Default" : "t2.small",
+            "AllowedValues" : ["t2.nano","t2.small","t2.micro"],
+            "Description" : "My ec2 instance type"
+
+        },
+        "zon1" : {
+            "Type" : "AWS::EC2::AvailabilityZone::Name",
+            "Description" :"My AvailabilityZone Name"
+        },
+        "sgp" : {
+            "Type" : "AWS::EC2::SecurityGroup::GroupName",
+            "Description" : "My SecurityGroup Name"
+        }
+    },
+    "Resources" : {
+        "myserver" : {
+            "Type" : "AWS::EC2::Instance",
+            "Properties" : {
+                "InstanceType" : { "Ref" : "myinstanc" },
+                "KeyName" : { "Ref" : "mykey" },
+                "ImageId" : "ami-08df646e18b182346",
+                "SecurityGroups" : [{ "Ref" : "sgp" }],
+                "AvailabilityZone" : { "Ref" : "zon1"},
+                "BlockDeviceMappings" : [
+                    {
+                        "DeviceName" : "/dev/sdh",
+                        "Ebs" : {
+                            "DeleteOnTermination" : "true",
+                            "VolumeType" : "gp2",
+                            "VolumeSize" : "10"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

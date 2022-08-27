@@ -1,0 +1,14 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description" : "A Simple Virtual Machine",
+    "Resources" : {
+        "MyMachine" : {
+            "Type" : "AWS::EC2::Instance",
+            "Properties" : {
+                "ImageId" : "ami-08df646e18b182346",
+                "InstanceType" : "t2.micro",
+                "KeyName" : "mykey"
+            }
+        }
+    }
+}

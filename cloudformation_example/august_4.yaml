@@ -1,0 +1,40 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  This is Description 
+  of the resources 
+  we are creating 
+  right now
+Parameters:
+  indexdoc:
+    Type: "String"
+    Default: "index.html"
+  errordoc:
+    Type: "String"
+    Default: "error.html"
+Metadata:
+  Instances:
+    Description: "This is about Inastances"
+  Databases:
+    Description: "This is about Databases"
+  Storage:
+    Description: "This is about Storage"
+  Networking:
+    Description: "This is about Networking"
+Resources:
+  mybucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      AccessControl: "PublicRead"
+      BucketName: "bhajansinghwebsite"
+      WebsiteConfiguration:
+        IndexDocument:
+          Ref: "indexdoc"
+        ErrorDocument:
+          Ref: "errordoc"
+Outputs:
+  WebsiteURL:
+    Value: !GetAtt
+      - mybucket
+      - WebsiteURL
+    Description: "URL for website hosted on S3"

@@ -1,0 +1,25 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description" : "A Simple EC2 Server",
+    "Parameters" : {
+        "para1" : {
+            "Type" : "String",
+            "Default" : "t2.micro",
+            "AllowedValues" : ["t2.micro", "m1.small", "m1.large"],
+            "Description" : "Enter Instance type"
+        },
+        "para2" : {
+            "Type" :"AWS::EC2::KeyPair::KeyName"
+        }
+    },
+    "Resources" : {
+        "MyInstance" : {
+            "Type" :"AWS::EC2::Instance",
+            "Properties" : {
+                "InstanceType" : { "Ref":"para1" },
+                "KeyName" : { "Ref" : "para2" },
+                "ImageId" : "ami-08df646e18b182346"
+            }
+        }
+    }
+}

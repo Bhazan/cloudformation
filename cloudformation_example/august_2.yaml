@@ -1,0 +1,22 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "A Simple Example"
+Parameters:
+  mykey:
+    Type: "AWS::EC2::KeyPair::KeyName"
+    Default: "mykey"
+  instancetype:
+    Type: "String"
+    Default: "t2.micro"
+
+Resources:
+  myMachine:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType:
+        Ref: "instancetype"
+      ImageId: "ami-08df646e18b182346"
+      KeyName:
+        Ref: "mykey"
+      SecurityGroups:
+        - webdmz
