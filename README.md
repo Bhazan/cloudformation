@@ -44,4 +44,4 @@ Collection of cloudformation template
 }
 ```
 
-** Templates include several major sections. The Resources section is the only required section. ** 
+**Templates include several major sections. The Resources section is the only required section.** 
