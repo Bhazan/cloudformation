@@ -8,5 +8,10 @@ Collection of cloudformation template
 #### JSON format
 ```
 "AWSTemplateFormateVersion" : "version date",
-"Description" : "JSON String"
+
+"Description" : "JSON String",
+
+"Metadata" : {
+    template metadata
+}
 ```
