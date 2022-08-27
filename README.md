@@ -7,5 +7,5 @@ Collection of cloudformation template
 
 #### JSON format
 ```
-**"AWSTemplateFormateVersion"** : "2010-09-09",
+** "AWSTemplateFormateVersion" ** : "2010-09-09",
 ```
